@@ -27,23 +27,15 @@
             <% when 'ayah' %>
               <% words = Word.find_range(@mushaf, line['first_word_id'], line['last_word_id']) %>
               <% current_ayah = nil %>
-              
-              <% words.each_with_index do |word, index| %>
-                <% if word['ayah'] != current_ayah %>
-                  <% if current_ayah %>
-                    </div></div>
-                  <% end %>
-                  <% current_ayah = word['ayah'] %>
-                  <div class="ayah-container">
-                    <div class="ayah" data-ayah="<%= word['surah'] %>:<%= word['ayah'] %>">
-                <% end %>
-                
-                <span class="char char-word <%= 'char-end' if word['text']&.match?(/[\u06DD]/) %>" 
-                      id="word-<%= word['id'] %>"
-                      data-location="<%= word['location'] %>">
-                  <%= word['text'] %>
-                </span>
-              <% end %>
+
+              <% words.each_with_index do |word, index| %><%
+                  if word['ayah'] != current_ayah
+                    if current_ayah %></div></div><%
+                    end
+                    current_ayah = word['ayah'] %><div class="ayah-container"><div class="ayah" data-ayah="<%= word['surah'] %>:<%= word['ayah'] %>"><%
+                  end
+                %><span class="char char-word <%= 'char-end' if word['text']&.match?(/[\u06DD]/) %>" id="word-<%= word['id'] %>" data-location="<%= word['location'] %>"><%= word['text'] %></span><%
+                end %>
               
               <% if words.any? %>
                 </div></div>

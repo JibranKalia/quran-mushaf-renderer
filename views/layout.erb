@@ -53,6 +53,9 @@
     .page {
       font-size: 30px;
       line-height: 1.8;
+      unicode-bidi: embed;
+      letter-spacing: normal;
+      word-spacing: normal;
     }
     
     .line-container {
@@ -81,15 +84,27 @@
       font-size: 32px;
       margin: 15px 0;
     }
-    
+
     .ayah-container {
       display: inline;
     }
-    
-    .char {
-      display: inline-block;
-      margin: 0 2px;
+
+    .ayah {
+      display: inline;
     }
+
+    .char {
+      display: inline;
+      margin: 0;
+    }
+
+    .line {
+      text-align: justify;
+      text-align-last: justify;
+      white-space: nowrap;
+      word-spacing: normal;
+    }
+        
     
     .char-end {
       color: #e74c3c;
