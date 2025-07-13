@@ -14,15 +14,22 @@
           <div class="line <%= 'line--center' if line['is_centered'] == 1 %> <%= "line--#{line['line_type'].gsub('_', '-')}" %>">
             
             <% case line['line_type'] %>
-            <% when 'surah_name' %>
-              <% if line['surah_number'] && chapter = Chapter.find(line['surah_number']) %>
-                <span class="surah-ornament">﴿</span>
-                <span>سورة <%= chapter['name_arabic'] %></span>
-                <span class="surah-ornament">﴾</span>
-              <% end %>
-              
+              <% when 'surah_name' %>
+                <% if line['surah_number'] && chapter = Chapter.find(line['surah_number']) %>
+                  <div class="surah-name">
+                    <div class="quran-icon surah-header">header</div>
+                    <div class="surah-icon position-absolute">
+                      <span class="surah-name-v4-icon me-2">
+                        surah<%= line['surah_number'].to_s.rjust(3, '0') %>
+                      </span>
+                      <span class="surah-name-v4-icon">surah-icon</span>
+                    </div>
+                  </div>
+                <% end %>
             <% when 'basmallah' %>
-              <span>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+              <div class="bismillah text-center">
+                ﷽
+              </div>
               
             <% when 'ayah' %>
               <% words = Word.find_range(@mushaf, line['first_word_id'], line['last_word_id']) %>
