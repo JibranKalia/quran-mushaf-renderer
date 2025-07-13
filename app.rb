@@ -170,16 +170,44 @@ class LineViewModel
   end
 end
 
+# Configure Sinatra for production
+configure :production do
+  set :server, :puma
+  set :bind, '0.0.0.0'
+  set :port, ENV.fetch('PORT', 4567)
+end
+
 # Routes
+get '/health' do
+  # Simple health check - verify database connection
+
+  DB.execute('SELECT 1')
+  'OK'
+rescue StandardError => e
+  status 503
+  "Database connection failed: #{e.message}"
+end
+
 get '/' do
   redirect '/mushaf/1/page/15'
 end
 
 get '/mushaf/:mushaf_id/page/:page_number' do
-  @page_data = PageViewModel.new(
-    params[:mushaf_id].to_i,
-    params[:page_number].to_i
-  )
+  mushaf_id = params[:mushaf_id].to_i
+  page_number = params[:page_number].to_i
 
+  # Basic validation
+  mushaf = Mushaf.find(mushaf_id)
+  if mushaf.nil?
+    status 404
+    return 'Mushaf not found'
+  end
+
+  if page_number < 1 || page_number > mushaf['number_of_pages']
+    status 404
+    return 'Page not found'
+  end
+
+  @page_data = PageViewModel.new(mushaf_id, page_number)
   erb :page
 end

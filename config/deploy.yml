@@ -1,0 +1,24 @@
+service: quran-renderer
+image: jibrankalia/quran-renderer
+servers:
+  web:
+    - 209.38.7.72
+registry:
+  username: jibrankalia
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+env:
+  clear:
+    RACK_ENV: production
+    PORT: 4567
+  secret:
+proxy:
+  host: quran.jibrankalia.com
+  ssl: true
+  app_port: 80
+  healthcheck:
+    path: /health
+ssh:
+  user: root
+builder:
+  arch: amd64
