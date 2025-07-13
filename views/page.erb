@@ -1,0 +1,64 @@
+<div class="navigation">
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>">← Previous</a>
+  <span>Page <%= @page_number %> - <%= @mushaf['mushaf_name'] %></span>
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>">Next →</a>
+</div>
+
+<div class="mushaf <%= @mushaf['code'] %>">
+  <div class="page-wrapper">
+    <div id="page-<%= @page_number %>" class="page">
+      <% @lines.each do |line| %>
+        <% next if line['line_type'].nil? || line['line_type'].empty? %>
+        
+        <div class="line-container" data-line="<%= line['line_number'] %>">
+          <div class="line <%= 'line--center' if line['is_centered'] == 1 %> <%= "line--#{line['line_type'].gsub('_', '-')}" %>">
+            
+            <% case line['line_type'] %>
+            <% when 'surah_name' %>
+              <% if line['surah_number'] && chapter = Chapter.find(line['surah_number']) %>
+                <span class="surah-ornament">﴿</span>
+                <span>سورة <%= chapter['name_arabic'] %></span>
+                <span class="surah-ornament">﴾</span>
+              <% end %>
+              
+            <% when 'basmallah' %>
+              <span>بِسْمِ اللَّهِ الرَّحْمَٰنِ الرَّحِيمِ</span>
+              
+            <% when 'ayah' %>
+              <% words = Word.find_range(@mushaf, line['first_word_id'], line['last_word_id']) %>
+              <% current_ayah = nil %>
+              
+              <% words.each_with_index do |word, index| %>
+                <% if word['ayah'] != current_ayah %>
+                  <% if current_ayah %>
+                    </div></div>
+                  <% end %>
+                  <% current_ayah = word['ayah'] %>
+                  <div class="ayah-container">
+                    <div class="ayah" data-ayah="<%= word['surah'] %>:<%= word['ayah'] %>">
+                <% end %>
+                
+                <span class="char char-word <%= 'char-end' if word['text']&.match?(/[\u06DD]/) %>" 
+                      id="word-<%= word['id'] %>"
+                      data-location="<%= word['location'] %>">
+                  <%= word['text'] %>
+                </span>
+              <% end %>
+              
+              <% if words.any? %>
+                </div></div>
+              <% end %>
+            <% end %>
+            
+          </div>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<div class="navigation">
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>">← Previous</a>
+  <span>Page <%= @page_number %></span>
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>">Next →</a>
+</div>
