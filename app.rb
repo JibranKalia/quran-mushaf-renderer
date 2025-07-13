@@ -1,4 +1,3 @@
-# app.rb
 require 'sinatra'
 require 'sinatra/reloader' if development?
 require 'sqlite3'
