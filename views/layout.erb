@@ -3,29 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Quran Page <%= @page_number %></title>
+  <title>Quran Page <%= @page_data.page_number %></title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
     /* Font definitions for different mushaf versions */
     @font-face {
-      font-family: 'p<%= @page_number %>-v1';
-      src: local(QCF_P<%= @page_number.to_s.rjust(3, '0') %>),
-           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v1-optimized/woff2/p<%= @page_number %>.woff2?v=3.1') format('woff2'),
-           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v1-optimized/woff/p<%= @page_number %>.woff?v=3.1') format('woff');
+      font-family: 'p<%= @page_data.page_number %>-v1';
+      src: local(QCF_P<%= @page_data.page_number.to_s.rjust(3, '0') %>),
+           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v1-optimized/woff2/p<%= @page_data.page_number %>.woff2?v=3.1') format('woff2'),
+           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v1-optimized/woff/p<%= @page_data.page_number %>.woff?v=3.1') format('woff');
       font-display: swap;
     }
     
     @font-face {
-      font-family: 'p<%= @page_number %>-v2';
-      src: local(QCF<%= '2' + @page_number.to_s.rjust(3, '0') %>),
-           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v2/woff2/p<%= @page_number %>.woff2?v=3.1') format('woff2'),
-           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v2/woff/p<%= @page_number %>.woff?v=3.1') format('woff');
+      font-family: 'p<%= @page_data.page_number %>-v2';
+      src: local(QCF<%= '2' + @page_data.page_number.to_s.rjust(3, '0') %>),
+           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v2/woff2/p<%= @page_data.page_number %>.woff2?v=3.1') format('woff2'),
+           url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/v2/woff/p<%= @page_data.page_number %>.woff?v=3.1') format('woff');
       font-display: swap;
     }
     
     @font-face {
-      font-family: 'p<%= @page_number %>-indopak';
-      src: url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/indopak/woff2/p<%= @page_number %>.woff2?v=3.1') format('woff2');
+      font-family: 'p<%= @page_data.page_number %>-indopak';
+      src: url('https://static-cdn.tarteel.ai/qul/fonts/quran_fonts/indopak/woff2/p<%= @page_data.page_number %>.woff2?v=3.1') format('woff2');
       font-display: swap;
     }
 
@@ -50,9 +50,9 @@
     }
 
     /* Custom Quran-specific styles that can't be replaced with Tailwind */
-    .mushaf.qpc_v1 .page { font-family: 'p<%= @page_number %>-v1'; }
-    .mushaf.qpc_v2 .page { font-family: 'p<%= @page_number %>-v2'; }
-    .mushaf.indopak_nastaleeq_15 .page { font-family: 'p<%= @page_number %>-indopak'; }
+    .mushaf.qpc_v1 .page { font-family: 'p<%= @page_data.page_number %>-v1'; }
+    .mushaf.qpc_v2 .page { font-family: 'p<%= @page_data.page_number %>-v2'; }
+    .mushaf.indopak_nastaleeq_15 .page { font-family: 'p<%= @page_data.page_number %>-indopak'; }
     
     .page {
       unicode-bidi: embed;
