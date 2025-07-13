@@ -11,7 +11,6 @@ env:
   clear:
     RACK_ENV: production
     PORT: 4567
-  secret:
 proxy:
   host: quran.jibrankalia.com
   ssl: true
