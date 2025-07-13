@@ -24,8 +24,8 @@
         <div class="line-container mb-2.5" data-line="<%= line.number %>">
           <div class="<%= line.css_classes %>">
             
-            <% case line.type %>
-            <% when 'surah_name' %>
+            <% case line.type
+            when 'surah_name' %>
               <% if line.data[:chapter] %>
                 <div class="surah-name relative h-20 flex justify-center items-center">
                   <div class="quran-icon surah-header">header</div>
