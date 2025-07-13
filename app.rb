@@ -170,7 +170,6 @@ class LineViewModel
   end
 end
 
-# Configure Sinatra for production
 configure :production do
   set :server, :puma
   set :bind, '0.0.0.0'
@@ -179,8 +178,6 @@ end
 
 # Routes
 get '/health' do
-  # Simple health check - verify database connection
-
   DB.execute('SELECT 1')
   'OK'
 rescue StandardError => e
