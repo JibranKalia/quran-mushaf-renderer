@@ -6,9 +6,6 @@ GEM
     multi_json (1.16.0)
     mustermann (3.0.3)
       ruby2_keywords (~> 0.0.1)
-    nio4r (2.7.4)
-    puma (6.6.0)
-      nio4r (~> 2.0)
     rack (3.1.16)
     rack-protection (4.1.1)
       base64 (>= 0.1.0)
@@ -44,6 +41,7 @@ GEM
     sqlite3 (2.7.2-x86_64-linux-gnu)
     sqlite3 (2.7.2-x86_64-linux-musl)
     tilt (2.6.1)
+    webrick (1.9.1)
 
 PLATFORMS
   aarch64-linux-gnu
@@ -59,11 +57,11 @@ PLATFORMS
   x86_64-linux-musl
 
 DEPENDENCIES
-  puma
   rackup
   sinatra
   sinatra-contrib
   sqlite3
+  webrick
 
 BUNDLED WITH
    2.6.9

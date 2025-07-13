@@ -3,6 +3,13 @@ require 'sinatra/reloader' if development?
 require 'sqlite3'
 require 'erb'
 
+configure do
+  set :server, 'webrick'
+  set :bind, '0.0.0.0'
+  set :port, ENV.fetch('PORT', 4567).to_i
+  set :environment, ENV.fetch('RACK_ENV', 'production').to_sym
+end
+
 # Database Configuration
 DB = SQLite3::Database.new('quran-combined.db')
 DB.results_as_hash = true
@@ -170,23 +177,20 @@ class LineViewModel
   end
 end
 
-configure :production do
-  set :server, :puma
-  set :bind, '0.0.0.0'
-  set :port, ENV.fetch('PORT', 4567)
-end
-
 # Routes
 get '/health' do
+  # Simple health check - verify database connection
+
   DB.execute('SELECT 1')
-  'OK'
+  status 200
+  body 'OK'
 rescue StandardError => e
   status 503
-  "Database connection failed: #{e.message}"
+  body "Database connection failed: #{e.message}"
 end
 
 get '/' do
-  redirect '/mushaf/1/page/15'
+  redirect '/mushaf/1/page/1'
 end
 
 get '/mushaf/:mushaf_id/page/:page_number' do
