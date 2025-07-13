@@ -1,36 +1,37 @@
 <!-- Navigation -->
 <nav class="flex justify-center items-center gap-4 mb-5">
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>" 
+  <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.next_page %>" 
      class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
     → السابق
   </a>
   <span class="font-medium text-gray-700">
-    الصفحة <%= @page_number %> - <%= @mushaf['mushaf_name'] %>
+    الصفحة <%= @page_data.page_number %> - <%= @page_data.mushaf['mushaf_name'] %>
   </span>
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>" 
+  <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.prev_page %>" 
      class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
     التالي ←
   </a>
 </nav>
 
 <!-- Main Content -->
-<main class="mushaf <%= @mushaf['code'] %> bg-white p-5 max-w-4xl mx-auto shadow-lg rounded-lg text-center">
+<main class="mushaf <%= @page_data.mushaf['code'] %> bg-white p-5 max-w-4xl mx-auto shadow-lg rounded-lg text-center">
   <div class="page-wrapper inline-block text-right">
-    <div id="page-<%= @page_number %>" class="page text-3xl leading-loose">
-      <% @lines.each do |line| %>
-        <% next if line['line_type'].nil? || line['line_type'].empty? %>
+    <div id="page-<%= @page_data.page_number %>" class="page text-3xl leading-loose">
+      
+      <% @page_data.lines.each do |line| %>
+        <% next unless line.type %>
         
-        <div class="line-container mb-2.5" data-line="<%= line['line_number'] %>">
-          <div class="line <%= 'line--center' if line['is_centered'] == 1 %> <%= "line--#{line['line_type'].gsub('_', '-')}" %>">
+        <div class="line-container mb-2.5" data-line="<%= line.number %>">
+          <div class="<%= line.css_classes %>">
             
-            <% case line['line_type'] %>
+            <% case line.type %>
             <% when 'surah_name' %>
-              <% if line['surah_number'] && chapter = Chapter.find(line['surah_number']) %>
+              <% if line.data[:chapter] %>
                 <div class="surah-name relative h-20 flex justify-center items-center">
                   <div class="quran-icon surah-header">header</div>
                   <div class="surah-icon absolute flex items-center text-5xl">
                     <span class="surah-name-v4-icon ml-2">
-                      surah<%= line['surah_number'].to_s.rjust(3, '0') %>
+                      <%= line.data[:formatted_number] %>
                     </span>
                     <span class="surah-name-v4-icon">surah-icon</span>
                   </div>
@@ -39,40 +40,39 @@
               
             <% when 'basmallah' %>
               <div class="bismillah-font text-4xl text-center">
-                ﷽
+                <%= line.data[:text] %>
               </div>
               
             <% when 'ayah' %>
-              <% words = Word.find_range(@mushaf, line['first_word_id'], line['last_word_id']) %>
-              <% current_ayah = nil %>
-              <% words.each_with_index do |word, index| %><%
-                  if word['ayah'] != current_ayah
-                    if current_ayah %></div></div><%
-                    end
-                    current_ayah = word['ayah'] %><div class="ayah-container"><div class="ayah" data-ayah="<%= word['surah'] %>:<%= word['ayah'] %>"><%
-                  end
-                %><span class="char char-word <%= 'text-red-500' if word['text']&.match?(/[\u06DD]/) %>" id="word-<%= word['id'] %>" data-location="<%= word['location'] %>"><%= word['text'] %></span><%
-                end %>
-              <% if words.any? %>
-                </div></div>
+              <% line.data[:ayahs].each do |ayah_group| %>
+                <div class="ayah-container">
+                  <div class="ayah" data-ayah="<%= ayah_group[:surah] %>:<%= ayah_group[:ayah] %>">
+                    <% ayah_group[:words].each do |word| %>
+                      <span class="char char-word <%= 'text-red-500' if word[:is_end] %>" 
+                            id="word-<%= word[:id] %>" 
+                            data-location="<%= word[:location] %>"><%= word[:text] %></span>
+                    <% end %>
+                  </div>
+                </div>
               <% end %>
             <% end %>
             
           </div>
         </div>
       <% end %>
+      
     </div>
   </div>
 </main>
 
 <!-- Bottom Navigation -->
 <nav class="flex justify-center items-center gap-4 mt-5">
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>" 
+  <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.next_page %>" 
      class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
     → السابق
   </a>
-  <span class="font-medium text-gray-700">الصفحة <%= @page_number %></span>
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>" 
+  <span class="font-medium text-gray-700">الصفحة <%= @page_data.page_number %></span>
+  <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.prev_page %>" 
      class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
     التالي ←
   </a>
