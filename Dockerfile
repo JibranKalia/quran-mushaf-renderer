@@ -1,11 +1,10 @@
 # Dockerfile
 FROM ruby:3.2-slim
 
-# Install dependencies
 RUN apt-get update -qq && \
-    apt-get install -y build-essential libsqlite3-dev && \
+    apt-get install --no-install-recommends -y build-essential libsqlite3-dev curl && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists /var/cache/apt/archives
 
 # Set working directory
 WORKDIR /app
