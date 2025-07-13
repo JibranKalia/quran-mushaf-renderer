@@ -1,7 +1,7 @@
 <div class="navigation">
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>">← Previous</a>
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>">→ Previous</a>
   <span>Page <%= @page_number %> - <%= @mushaf['mushaf_name'] %></span>
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>">Next →</a>
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>">Next ←</a>
 </div>
 
 <div class="mushaf <%= @mushaf['code'] %>">
@@ -49,8 +49,9 @@
   </div>
 </div>
 
+
 <div class="navigation">
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>">← Previous</a>
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number - 1 %>">→ Previous</a>
   <span>Page <%= @page_number %></span>
-  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>">Next →</a>
+  <a href="/mushaf/<%= @mushaf_id %>/page/<%= @page_number + 1 %>">Next ←</a>
 </div>
