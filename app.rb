@@ -17,7 +17,7 @@ DB.results_as_hash = true
 # Models
 class Mushaf
   def self.find(id)
-    DB.get_first_row('SELECT * FROM mushaf WHERE id = ?', [id])
+    DB.get_first_row('SELECT * FROM mushafs WHERE id = ?', [id])
   end
 end
 
@@ -204,7 +204,7 @@ get '/mushaf/:mushaf_id/page/:page_number' do
     return 'Mushaf not found'
   end
 
-  if page_number < 1 || page_number > mushaf['number_of_pages']
+  if page_number < 1 || page_number > mushaf['pages_count']
     status 404
     return 'Page not found'
   end
