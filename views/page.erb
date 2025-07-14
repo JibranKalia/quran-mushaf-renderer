@@ -5,7 +5,7 @@
     → السابق
   </a>
   <span class="font-medium text-gray-700 text-center w-32 md:w-64">
-    الصفحة <%= @page_data.page_number %> - <%= @page_data.mushaf['mushaf_name'] %>
+    الصفحة <%= @page_data.page_number %>
   </span>
   <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.next_page %>" 
      class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
@@ -64,16 +64,3 @@
     </div>
   </div>
 </main>
-
-<!-- Bottom Navigation -->
-<nav class="flex justify-center items-center gap-4 mt-5">
-  <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.prev_page %>" 
-     class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
-    → السابق
-  </a>
-  <span class="font-medium text-gray-700">الصفحة <%= @page_data.page_number %></span>
-  <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.next_page %>" 
-     class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
-    التالي ←
-  </a>
-</nav>
