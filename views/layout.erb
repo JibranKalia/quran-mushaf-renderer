@@ -60,6 +60,24 @@
       text-align-last: justify;
     }
     
+    /* Mobile-specific adjustments */
+    @media (max-width: 640px) {
+      .page {
+        font-size: 1.25rem !important; /* Override inline styles on mobile */
+        line-height: 1.75 !important;
+      }
+      
+      .line {
+        white-space: normal; /* Allow text wrapping on mobile */
+      }
+      
+      .surah-header {
+        font-size: 50px !important;
+        margin-top: -20px;
+        margin-bottom: -20px;
+      }
+    }
+    
     .line {
       text-align: justify;
       text-align-last: justify;
@@ -94,7 +112,7 @@
     }
   </style>
 </head>
-<body class="bg-gray-100 p-5">
+<body class="bg-gray-100 p-2 sm:p-5">
   <%= yield %>
 </body>
 </html>
