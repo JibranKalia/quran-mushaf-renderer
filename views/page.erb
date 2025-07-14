@@ -4,7 +4,7 @@
      class="px-5 py-2.5 bg-blue-500 text-white no-underline rounded hover:bg-blue-600 transition-colors">
     → السابق
   </a>
-  <span class="font-medium text-gray-700 text-center">
+  <span class="font-medium text-gray-700 text-center w-32 md:w-64">
     الصفحة <%= @page_data.page_number %> - <%= @page_data.mushaf['mushaf_name'] %>
   </span>
   <a href="/mushaf/<%= @page_data.mushaf_id %>/page/<%= @page_data.next_page %>" 
