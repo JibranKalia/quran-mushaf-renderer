@@ -4,7 +4,8 @@ import sqlite3
 
 # Hardcoded paths
 COMBINED_DB = "quran-combined.db"
-NASTALEEQ_DB = "qpc-v2.db"
+NASTALEEQ_DB = "/Users/jibran.kalia/side/quran_render_poc/qpc-nastaleeq.db"
+COLUMN_NAME = "qpc_nastaleeq"
 
 # Connect to both databases
 combined_conn = sqlite3.connect(COMBINED_DB)
@@ -21,7 +22,7 @@ nastaleeq_data = nastaleeq_cursor.fetchall()
 update_count = 0
 for location, text in nastaleeq_data:
     combined_cursor.execute(
-        "UPDATE words SET qpc_v2 = ? WHERE location = ?",
+        f"UPDATE words SET {COLUMN_NAME} = ? WHERE location = ?",
         (text, location)
     )
     update_count += 1
